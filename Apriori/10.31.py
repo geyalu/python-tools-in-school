@@ -93,19 +93,36 @@ def CreateItemSet_2(dic,num=2):
 
 def CreateItemSet_3(dic,num=3):
     temp_list=[]
-    tup={}
     dic_tmp={}
+    ll=[]
     for item in dic:
 
         for item2 in dic:
             if cmp(item[0],item2[0])==0:
-                tup=item2+item
-        ll= list(set(list(tup)))
-        temp_list.append(ll)
-    temp_list_2=temp_list[:]
+                ll.append(item[1])
+                ll.append(item2[1])
 
+        ll_sort= list(set(ll))
+        ll=[]
+
+        new_list=list(itertools.combinations(ll_sort,2))
+
+        for i in new_list:
+            temp=item[0]
+            e = tuple(temp.split(","))
+            q=(e+i)
+            temp_list.append(q)
+
+    l2 = list(set(temp_list))
+    for item in l2:
+
+        for i,item2 in enumerate(l2):
+            if item[0]==item2[0] and item[1]==item2[2] and item2[1]==item[2]:
+
+                del l2[i]
+
+    temp_list_2=l2[:]
     for i in temp_list:
-
         if len(i)<num:
             temp_list_2.remove(i)
 
@@ -115,18 +132,40 @@ def CreateItemSet_3(dic,num=3):
     return dic_tmp
 
 def CreateItemSet_4(dic,num=4):
+
     temp_list=[]
-    tup={}
     dic_tmp={}
+    ll=[]
     for item in dic:
+
         for item2 in dic:
             if cmp(item[0],item2[0])==0 and cmp(item[1],item2[1])==0:
-                tup=item2+item
+                ll.append(item[1])
+                ll.append(item2[1])
 
-        ll= list(set(list(tup)))
-        temp_list.append(ll)
+        ll_sort= list(set(ll))
+        ll=[]
 
-    temp_list_2=temp_list[:]
+        new_list=list(itertools.combinations(ll_sort,2))
+
+        for i in new_list:
+
+            temp=item[0]
+
+            e = tuple(temp.split(","))
+            q=(e+i)
+
+            temp_list.append(q)
+
+    l2 = list(set(temp_list))
+    for item in l2:
+
+        for i,item2 in enumerate(l2):
+            if item[0]==item2[0] and item[1]==item2[2] and item2[1]==item[2]:
+
+                del l2[i]
+
+    temp_list_2=l2[:]
     for i in temp_list:
         if len(i)<num:
             temp_list_2.remove(i)
@@ -166,11 +205,9 @@ def Count(dic,DB_table="shop"):
     return dic
 
 
-
 if __name__ == '__main__':
 
-
-    min_support=150
+    min_support=200
 
     dic_1=CreateDic()  # Create dic first time
 
@@ -185,13 +222,13 @@ if __name__ == '__main__':
     print "------ Item Set 2 ------ "
 
     ItemSet_2=CreateItemSet_2(dic_1_Cutted,2)
-    print  "Item Set 2: %s "  % (ItemSet_2)
+    print  "Item Set 2: ", ItemSet_2
 
     ItemSet_2_Counted=Count(ItemSet_2)
-    print  "Item Set 2 Counted: %s" %(ItemSet_2_Counted)
+    print  "Item Set 2 Counted: ", ItemSet_2_Counted
 
     ItemSet_2_Cutted=Cut(min_support,ItemSet_2_Counted)
-    print  "Item Set 2 Cutted:  %s "  % (ItemSet_2_Cutted)
+    print  "Item Set 2 Cutted: "  ,ItemSet_2_Cutted
 
 
     print "------ Item Set 3 ------"
@@ -206,11 +243,11 @@ if __name__ == '__main__':
 
     print "------ Item Set 4 ------"
     ItemSet_4=CreateItemSet_4(ItemSet_3_Cutted)
-    print  "Item Set 3: %s "  %(ItemSet_4)
+    print  "Item Set 4: %s "  %(ItemSet_4)
 
     ItemSet_4_Counted=Count(ItemSet_4)
-    print  "Item Set 3 Counted: %s" %(ItemSet_4_Counted)
+    print  "Item Set 4 Counted: %s" %(ItemSet_4_Counted)
 
     ItemSet_4_Cutted=Cut(min_support,ItemSet_4_Counted)
-    print  "Item Set 3 Cutted:  %s "  % (ItemSet_4_Cutted)
+    print  "Item Set 4 Cutted:  %s "  % (ItemSet_4_Cutted)
 

@@ -103,6 +103,7 @@ def CreateItemSet_3(dic,num=3):
         ll= list(set(list(tup)))
         temp_list.append(ll)
     temp_list_2=temp_list[:]
+    print temp_list_2
 
     for i in temp_list:
 
@@ -169,7 +170,7 @@ def Count(dic):
 
 if __name__ == '__main__':
 
-    min_support=4
+    min_support=2
 
     dic_1=CreateDic("shop_test")  # Create dic first time
 
